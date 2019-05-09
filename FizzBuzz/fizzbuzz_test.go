@@ -1,14 +1,8 @@
-package FizzBuzz
+package main
 
 import (
 	"testing"
 )
-
-func TestFizz(t *testing.T) {
-	var fizz int = 3
-	var buzz int = 5
-	sayNumber(fizz, buzz)
-}
 
 func TestIsMatch(t *testing.T) {
 	var fizz = 3
