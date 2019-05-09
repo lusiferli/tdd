@@ -47,3 +47,18 @@ func TestIsNumberContainSpecialNumber(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestIsMathTwoSpecialNumber(t *testing.T) {
+	var fizz = 3
+	var buzz = 5
+
+	result := IsMathTwoSpecialNumber(fizz, buzz, 53)
+	if !result {
+		t.Fail()
+	}
+
+	result = IsMathTwoSpecialNumber(fizz, buzz, 5)
+	if result {
+		t.Fail()
+	}
+}

@@ -20,3 +20,7 @@ func IsMultiple(specialNumber int, number int) bool {
 func IsNumberContainSpecialNumber(specialNumber int, number int) bool {
 	return strings.ContainsAny(strconv.Itoa(number), strconv.Itoa(specialNumber))
 }
+
+func IsMathTwoSpecialNumber(specialNumberOne int, specialNumberTwo int, number int) bool {
+	return IsMatch(specialNumberOne, number) && IsMatch(specialNumberTwo, number)
+}
