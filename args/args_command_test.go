@@ -30,3 +30,15 @@ func Test_parse_type(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test_parse_type_bool(t *testing.T) {
+	commandStr := "-b true"
+	var command = CreateCommand(commandStr)
+	schema := Schema{}
+	schema.Flag = "b"
+	schema.Type = "bool"
+	schema.DefaultValue = false
+	if command.GetValueWithSchema(schema) != true {
+		t.Fail()
+	}
+}
