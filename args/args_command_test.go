@@ -11,7 +11,10 @@ func Test_parse_command(t *testing.T) {
 		t.Fail()
 	}
 
-	if command.Flag != "-f" {
+	if command.Flag != "f" {
+		t.Fail()
+	}
+	if command.Value != "12" {
 		t.Fail()
 	}
 }

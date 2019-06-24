@@ -16,10 +16,15 @@ func CreateCommand(commandStr string) Command {
 		return command
 	}
 	flag = items[0]
-	if len(items) == 1 {
+	flag = parseFlag(flag)
+	if len(items) == 2 {
 		value = items[1]
 	}
 	command.Flag = flag
 	command.Value = value
 	return command
+}
+
+func parseFlag(flagStr string) string {
+	return strings.Replace(flagStr, "-", "", 1)
 }
