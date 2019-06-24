@@ -1,10 +1,20 @@
 package main
 
-import "strings"
+import (
+	"errors"
+	"strconv"
+	"strings"
+)
 
 type Command struct {
 	Flag  string
 	Value string
+}
+
+type Schema struct {
+	Flag         string
+	Type         string
+	DefaultValue interface{}
 }
 
 func CreateCommand(commandStr string) Command {
@@ -27,4 +37,15 @@ func CreateCommand(commandStr string) Command {
 
 func parseFlag(flagStr string) string {
 	return strings.Replace(flagStr, "-", "", 1)
+}
+
+func (c *Command) GetValueWithSchema(schema Schema) interface{} {
+	if schema.Type == "int" {
+		value, err := strconv.Atoi(c.Value)
+		if err != nil {
+			return errors.New("FormatException")
+		}
+		return value
+	}
+	return nil
 }
