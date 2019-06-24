@@ -46,6 +46,19 @@ func (c *Command) GetValueWithSchema(schema Schema) interface{} {
 			return errors.New("FormatException")
 		}
 		return value
+	} else if schema.Type == "bool" {
+		commandValUp := strings.ToUpper(c.Value)
+		boolValue := false
+		if commandValUp == "TRUE" {
+			boolValue = true
+		} else if commandValUp == "FALSE" {
+			boolValue = false
+		} else {
+			return errors.New("FormatException")
+		}
+		return boolValue
+	} else if schema.Type == "string" {
+		return c.Value
 	}
 	return nil
 }

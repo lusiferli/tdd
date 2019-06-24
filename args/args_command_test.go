@@ -49,7 +49,7 @@ func Test_parse_type_string(t *testing.T) {
 	schema := Schema{}
 	schema.Flag = "s"
 	schema.Type = "string"
-	schema.DefaultValue = false
+	schema.DefaultValue = ""
 	if command.GetValueWithSchema(schema) != "jjjjjj" {
 		t.Fail()
 	}
