@@ -42,3 +42,15 @@ func Test_parse_type_bool(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test_parse_type_string(t *testing.T) {
+	commandStr := "-s jjjjjj"
+	var command = CreateCommand(commandStr)
+	schema := Schema{}
+	schema.Flag = "s"
+	schema.Type = "string"
+	schema.DefaultValue = false
+	if command.GetValueWithSchema(schema) != "jjjjjj" {
+		t.Fail()
+	}
+}
