@@ -153,3 +153,15 @@ func Test_parse_schema_to_map(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test_Create_Args(t *testing.T) {
+	commandStr := "-d 12 -f st"
+	schemaStr := "d:int,f:string"
+	var args = CreateArgs(schemaStr, commandStr)
+	if len(args.CommandMap) != 2 {
+		t.Fail()
+	}
+	if len(args.SchemaMap) != 2 {
+		t.Fail()
+	}
+}
