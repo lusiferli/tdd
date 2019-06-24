@@ -78,6 +78,31 @@ func Test_parse_command_str(t *testing.T) {
 	}
 }
 
+func Test_parse_command_to_map(t *testing.T) {
+	commandStr := "-d 12 -f st"
+	commands := ParseCommandsToMap(commandStr)
+	if commands == nil {
+		t.Fail()
+	}
+	schemaString := Schema{}
+	schemaString.Flag = "f"
+	schemaString.Type = "string"
+	schemaString.DefaultValue = ""
+	commandF := commands["f"]
+	if commandF.GetValueWithSchema(schemaString) != "st" {
+		t.Fail()
+	}
+	schemaInt := Schema{}
+	schemaInt.Flag = "d"
+	schemaInt.Type = "int"
+	schemaInt.DefaultValue = "0"
+	commandD := commands["d"]
+
+	if commandD.GetValueWithSchema(schemaInt) != 12 {
+		t.Fail()
+	}
+}
+
 func Test_parse_schema_str(t *testing.T) {
 	schemaStr := "d:int"
 	schema := CreateSchema(schemaStr)
@@ -101,10 +126,30 @@ func Test_parse_schema_strs(t *testing.T) {
 		t.Fail()
 	}
 
-	if schemas[0].Type != "int" && schemas[0].Flag != "d" && schemas[0].DefaultValue != "0" {
+	if schemas[0].Type != "int" || schemas[0].Flag != "d" || schemas[0].DefaultValue != 0 {
 		t.Fail()
 	}
-	if schemas[1].Type != "string" && schemas[1].Flag != "f" && schemas[10].DefaultValue != "" {
+	if schemas[1].Type != "string" || schemas[1].Flag != "f" || schemas[1].DefaultValue != "" {
+		t.Fail()
+	}
+}
+
+func Test_parse_schema_to_map(t *testing.T) {
+	schemaStr := "d:int,f:string"
+	schemaMap := ParseSchemasToMap(schemaStr)
+	if schemaMap == nil {
+		t.Fail()
+	}
+
+	if len(schemaMap) != 2 {
+		t.Fail()
+	}
+	schemaD := schemaMap["d"]
+	if schemaD.Type != "int" || schemaD.Flag != "d" || schemaD.DefaultValue != 0 {
+		t.Fail()
+	}
+	schemaF := schemaMap["f"]
+	if schemaF.Type != "string" || schemaF.Flag != "f" || schemaF.DefaultValue != "" {
 		t.Fail()
 	}
 }

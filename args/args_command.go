@@ -53,6 +53,15 @@ func ParseCommands(commandStr string) []Command {
 	return commands
 }
 
+func ParseCommandsToMap(schemaStr string) map[string]Command {
+	var commands = ParseCommands(schemaStr)
+	commandMap := make(map[string]Command)
+	for _, command := range commands {
+		commandMap[command.Flag] = command
+	}
+	return commandMap
+}
+
 func (c *Command) GetValueWithSchema(schema Schema) interface{} {
 	if schema.Type == "int" {
 		value, err := strconv.Atoi(c.Value)

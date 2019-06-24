@@ -38,3 +38,12 @@ func ParseSchemas(schemaStr string) []Schema {
 	}
 	return schemas
 }
+
+func ParseSchemasToMap(schemaStr string) map[string]Schema {
+	var schemas = ParseSchemas(schemaStr)
+	schemaMap := make(map[string]Schema)
+	for _, schema := range schemas {
+		schemaMap[schema.Flag] = schema
+	}
+	return schemaMap
+}
