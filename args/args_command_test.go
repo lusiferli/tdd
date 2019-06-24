@@ -165,3 +165,47 @@ func Test_Create_Args(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test_args_get_value(t *testing.T) {
+	commandStr := "-d 12 -f st"
+	schemaStr := "d:int,f:string"
+	var args = CreateArgs(schemaStr, commandStr)
+
+	if args.GetValue("d") != 12 {
+		t.Fail()
+	}
+	if args.GetValue("f") != "st" {
+		t.Fail()
+	}
+}
+
+func Test1(t *testing.T) {
+	args := CreateArgs("l:bool,d:int,f:string", "-l -d 8010 -f /usr/local")
+	if args.GetValue("l") != true {
+		t.Fail()
+	}
+
+	if args.GetValue("d") != 8010 {
+		t.Fail()
+	}
+
+	if args.GetValue("f") != "/usr/local" {
+		t.Fail()
+	}
+}
+
+func TestDefault2(t *testing.T) {
+	args := CreateArgs("l:bool,d:int,f:string,s:string", "-l -d  -f -s")
+	if args.GetValue("l") != true {
+		t.Fail()
+	}
+	if args.GetValue("d") != 0 {
+		t.Fail()
+	}
+	if args.GetValue("f") != "" {
+		t.Fail()
+	}
+	if args.GetValue("s") != "" {
+		t.Fail()
+	}
+}

@@ -64,24 +64,38 @@ func ParseCommandsToMap(schemaStr string) map[string]Command {
 
 func (c *Command) GetValueWithSchema(schema Schema) interface{} {
 	if schema.Type == "int" {
-		value, err := strconv.Atoi(c.Value)
-		if err != nil {
-			return errors.New("FormatException")
-		}
-		return value
+		return getIntValue(schema, c.Value)
 	} else if schema.Type == "bool" {
-		commandValUp := strings.ToUpper(c.Value)
-		boolValue := false
-		if commandValUp == "TRUE" {
-			boolValue = true
-		} else if commandValUp == "FALSE" {
-			boolValue = false
-		} else {
-			return errors.New("FormatException")
-		}
-		return boolValue
+		return getBoolValue(schema, c.Value)
 	} else if schema.Type == "string" {
 		return c.Value
 	}
 	return nil
+}
+
+func getIntValue(schema Schema, commandValue string) interface{} {
+	if commandValue == "" {
+		return schema.DefaultValue
+	}
+	value, err := strconv.Atoi(commandValue)
+	if err != nil {
+		return errors.New("FormatException")
+	}
+	return value
+}
+
+func getBoolValue(schema Schema, commandValue string) interface{} {
+	if commandValue == "" {
+		return schema.DefaultValue
+	}
+	commandValUp := strings.ToUpper(commandValue)
+	boolValue := false
+	if commandValUp == "TRUE" {
+		boolValue = true
+	} else if commandValUp == "FALSE" {
+		boolValue = false
+	} else {
+		return errors.New("FormatException")
+	}
+	return boolValue
 }

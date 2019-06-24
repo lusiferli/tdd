@@ -15,3 +15,10 @@ func CreateArgs(schemaStr string, commandStr string) Args {
 	args.CommandMap = commandMap
 	return args
 }
+
+func (args *Args) GetValue(flag string) interface{} {
+	command := args.CommandMap[flag]
+	schema := args.SchemaMap[flag]
+
+	return command.GetValueWithSchema(schema)
+}
