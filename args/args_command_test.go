@@ -77,3 +77,15 @@ func Test_parse_command_str(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test_parse_schema_str(t *testing.T) {
+	schemaStr := "d:int"
+	schema := CreateSchema(schemaStr)
+	if schema == (Schema{}) {
+		t.Fail()
+	}
+
+	if schema.Type != "int" {
+		t.Fail()
+	}
+}
