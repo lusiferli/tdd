@@ -25,3 +25,16 @@ func CreateSchema(schemaStr string) Schema {
 	}
 	return schema
 }
+
+func ParseSchemas(schemaStr string) []Schema {
+	var schemas []Schema
+	schemaItemStrArr := strings.Split(schemaStr, ",")
+	for _, schemaItemStr := range schemaItemStrArr {
+		if schemaItemStr == "" {
+			continue
+		}
+		schemaItemStr = strings.TrimSpace(schemaItemStr)
+		schemas = append(schemas, CreateSchema(schemaItemStr))
+	}
+	return schemas
+}

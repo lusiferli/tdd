@@ -89,3 +89,22 @@ func Test_parse_schema_str(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test_parse_schema_strs(t *testing.T) {
+	schemaStr := "d:int,f:string"
+	schemas := ParseSchemas(schemaStr)
+	if schemas == nil {
+		t.Fail()
+	}
+
+	if len(schemas) != 2 {
+		t.Fail()
+	}
+
+	if schemas[0].Type != "int" && schemas[0].Flag != "d" && schemas[0].DefaultValue != "0" {
+		t.Fail()
+	}
+	if schemas[1].Type != "string" && schemas[1].Flag != "f" && schemas[10].DefaultValue != "" {
+		t.Fail()
+	}
+}
