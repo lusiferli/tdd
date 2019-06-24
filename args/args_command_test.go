@@ -54,3 +54,26 @@ func Test_parse_type_string(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test_parse_command_str(t *testing.T) {
+	commandStr := "-d 12 -f st"
+	commands := ParseCommands(commandStr)
+	if commands == nil {
+		t.Fail()
+	}
+	schemaString := Schema{}
+	schemaString.Flag = "f"
+	schemaString.Type = "string"
+	schemaString.DefaultValue = ""
+	if commands[1].GetValueWithSchema(schemaString) != "st" {
+		t.Fail()
+	}
+	schemaInt := Schema{}
+	schemaInt.Flag = "d"
+	schemaInt.Type = "int"
+	schemaInt.DefaultValue = "0"
+
+	if commands[0].GetValueWithSchema(schemaInt) != 12 {
+		t.Fail()
+	}
+}

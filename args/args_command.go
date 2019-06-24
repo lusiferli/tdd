@@ -39,6 +39,20 @@ func parseFlag(flagStr string) string {
 	return strings.Replace(flagStr, "-", "", 1)
 }
 
+func ParseCommands(commandStr string) []Command {
+	var commands []Command
+	commandItemStrArr := strings.Split(commandStr, "-")
+	for _, commandItemStr := range commandItemStrArr {
+		if commandItemStr == "" {
+			continue
+		}
+		commandItemStr = strings.TrimSpace(commandItemStr)
+		commandItemStr = "-" + commandItemStr
+		commands = append(commands, CreateCommand(commandItemStr))
+	}
+	return commands
+}
+
 func (c *Command) GetValueWithSchema(schema Schema) interface{} {
 	if schema.Type == "int" {
 		value, err := strconv.Atoi(c.Value)
